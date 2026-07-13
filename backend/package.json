@@ -1,0 +1,28 @@
+{
+  "name": "documind-ai-backend",
+  "version": "1.0.0",
+  "description": "RAG-based document intelligence backend",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "multer": "^1.4.5-lts.1",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "langchain": "^0.2.5",
+    "@langchain/google-genai": "^0.0.23",
+    "@langchain/community": "^0.2.10",
+    "pdf-parse": "^1.1.1",
+    "mongodb": "^6.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
