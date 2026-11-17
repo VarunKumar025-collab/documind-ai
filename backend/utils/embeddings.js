@@ -9,5 +9,4 @@ async function getEmbedding(text) {
   const result = await embeddingModel.embedQuery(text);
   return result;
 }
-
 module.exports = getEmbedding;
