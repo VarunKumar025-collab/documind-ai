@@ -4,7 +4,12 @@ const Document = require("../models/Document");
 const getEmbedding = require("../utils/embeddings");
 
 // Ek fail ho toh agla model try hoga
-const MODELS = ["gemini-3.8-flash", "gemini-flash-latest"];
+const MODELS = [
+  "gemini-3.8-flash",
+  "gemini-3.5-flash",
+  "gemini-3.1-flash-lite",
+  "gemini-flash-latest",
+];
 
 const chatModels = MODELS.map(
   (name) =>
@@ -32,10 +37,11 @@ async function invokeWithRetry(prompt) {
         return response.content;
       } catch (err) {
         lastError = err;
-        console.error(`[Gemini] ${MODELS[m]} attempt ${attempt} failed:`, err.message);
+        const msg = String(err?.message || "");
+        console.error(`[Gemini] ${MODELS[m]} attempt ${attempt} failed:`, msg.slice(0, 200));
 
-        // Model hi nahi mila (404) -> seedha agle model pe jao
-        if (/404|not found|no longer available/i.test(err.message || "")) break;
+        // Model nahi mila (404) ya quota khatam (429) -> retry bekaar hai, agle model pe jao
+        if (/404|not found|no longer available|429|quota|RESOURCE_EXHAUSTED/i.test(msg)) break;
 
         if (!isRetryable(err)) throw err;
         await sleep(1000 * attempt);
