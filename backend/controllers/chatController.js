@@ -19,7 +19,9 @@ const chatModels = MODELS.map(
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const isRetryable = (err) =>
-  /503|429|500|overloaded|high demand/i.test(String(err?.message || ""));
+  /503|429|500|overloaded|high demand|fetch failed|ECONNRESET|ETIMEDOUT|ENOTFOUND|network|timeout/i.test(
+    String(err?.message || "")
+  );
 
 async function invokeWithRetry(prompt) {
   let lastError;
